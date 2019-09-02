@@ -22,12 +22,17 @@ public class A {
     @GetMapping("/A")
     public String test(){
         try {
-            redisLockUtils.getReentrantLock("KEY-A",1000,30000, TimeUnit.MILLISECONDS);
+            boolean lock = redisLockUtils.getReentrantLock("T", 1000, 60000, TimeUnit.MILLISECONDS);
+            if(lock){
+                //do something.
+                System.out.println("获取锁成功");
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
-            redisLockUtils.unlock("KEY-A");
+            //释放锁
+            redisLockUtils.unlock("T");
         }
-        return "Hello";
+        return "Hello World";
     }
 }

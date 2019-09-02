@@ -9,7 +9,6 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <!--SpringBoot最新版本-->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -33,15 +32,9 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <version>2.1.5.RELEASE</version>
         </dependency>
-        <!--暂时不用使用SpringBoot起步依赖的方式集成Redisson.会导致LettuceConnectionFactory注入失败-->
         <dependency>
             <groupId>org.redisson</groupId>
             <artifactId>redisson-spring-boot-starter</artifactId>
-            <version>3.11.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.redisson</groupId>
-            <artifactId>redisson</artifactId>
             <version>3.11.1</version>
         </dependency>
         <dependency>
@@ -50,6 +43,5 @@
             <version>1.18.4</version>
         </dependency>
     </dependencies>
-
 
 </project>

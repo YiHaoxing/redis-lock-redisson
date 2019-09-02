@@ -29,7 +29,7 @@ public class RedisLockUtils {
      * @param [lockKey, value, waitTime, expireTime]
      * @return boolean
      * @author YiHaoXing
-     * @description 可重入锁
+     * @description 可重入锁.默认
      * @date 18:16 2019/6/30
      **/
     public boolean getReentrantLock(String lockKey, int waitTime, int expireTime, TimeUnit timeUnit) throws InterruptedException {
@@ -48,11 +48,9 @@ public class RedisLockUtils {
         RLock lock = redissonClient.getLock(lockKey);
         RFuture<Void> rFuture;
         if (Optional.ofNullable(threadId).isPresent()) {
-            //rFuture= lock.lockAsync(threadId);
             rFuture = lock.lockAsync(expireTime, timeUnit, threadId);
             return rFuture.isSuccess();
         } else {
-            //rFuture = lock.lockAsync();
             rFuture = lock.lockAsync(expireTime, timeUnit);
         }
         return null == rFuture ? false : rFuture.isSuccess();
@@ -81,11 +79,9 @@ public class RedisLockUtils {
         RLock fairLock = redissonClient.getFairLock(lockKey);
         RFuture<Void> rFuture;
         if (Optional.ofNullable(threadId).isPresent()) {
-            //rFuture= fairLock.lockAsync(threadId);
             rFuture = fairLock.lockAsync(expireTime, timeUnit, threadId);
             return rFuture.isSuccess();
         } else {
-            //rFuture = fairLock.lockAsync();
             rFuture = fairLock.lockAsync(expireTime, timeUnit);
         }
         return null == rFuture ? false : rFuture.isSuccess();
@@ -119,10 +115,8 @@ public class RedisLockUtils {
     public void unlock(String lockKey) {
         RLock lock = redissonClient.getLock(lockKey);
         //如果释放锁的时候,redis的锁已经因为超时自动清除了.此时会报异常
-        //java.lang.IllegalMonitorStateException: attempt to unlock lock, not locked by current thread by node id: 4f6314c5-e3c4-484d-80dd-ea54114c4976 thread-id: 48
+        //java.lang.IllegalMonitorStateException: attempt to unlock lock, not locked by current thread by node id: 2ca6b4a4-60d1-424d-b131-9f139be12ff4 thread-id: 47
         lock.unlock();
     }
-
-
 
 }
