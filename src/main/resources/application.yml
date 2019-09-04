@@ -2,6 +2,6 @@ spring:
   redis:
     redisson:
       #Redis集群配置
-      config: classpath:redisson-cluster.yml
+      #config: classpath:redisson-cluster.yml
       #Redis单机配置
-      #config: classpath:redisson-single.yml
+      config: classpath:redisson-single.yml

@@ -26,6 +26,20 @@ public class RedisLockUtils {
     private RedissonClient redissonClient;
 
     /**
+     * @author YiHaoXing
+     * @description
+     * @date 16:53 2019/9/4
+     * @param [lockKey, expireTime, timeUnit]
+     * @return void
+     **/
+    public void getLock(String lockKey,int expireTime, TimeUnit timeUnit){
+        RLock lock = redissonClient.getLock(lockKey);
+        //拿不到锁线程会一直阻塞.直到拿到锁
+        log.info("Thread:{}正在获取锁...",Thread.currentThread().getId());
+        lock.lock(expireTime,timeUnit);
+    }
+
+    /**
      * @param [lockKey, value, waitTime, expireTime]
      * @return boolean
      * @author YiHaoXing
