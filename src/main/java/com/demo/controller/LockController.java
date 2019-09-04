@@ -1,5 +1,6 @@
 package com.demo.controller;
 
+import com.demo.annotation.RedisLock;
 import com.demo.redis.RedisLockUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,6 +110,36 @@ public class LockController {
         redisLockUtils.unlock(key);
         log.info("释放锁,Thread:{}",Thread.currentThread().getId());
         return "t4 over";
+    }
+
+
+    private static final String LOCK_KEY = "TT";
+    /**
+     * @author YiHaoXing
+     * @description 通过注解加锁
+     * @date 2019/9/5 0:47
+     * @param []
+     * @return java.lang.String
+     **/
+    @GetMapping("/t5")
+    @RedisLock(LOCK_KEY)
+    public String test3(){
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return "hello world";
+    }
+    @GetMapping("/t6")
+    @RedisLock(LOCK_KEY)
+    public String test4(){
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return "hello world";
     }
 
 }
